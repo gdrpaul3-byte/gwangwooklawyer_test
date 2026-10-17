@@ -14,7 +14,9 @@
 - 상담 신청서는 서버가 없으므로 `CONFIG.email` 주소로 메일 앱을 열어 전송합니다.
 
 ## 배포
-`main` 브랜치에 push 하면 `.github/workflows/pages.yml` 이 자동 배포합니다.
-최초 1회: 저장소 **Settings → Pages → Build and deployment → Source: GitHub Actions** 선택.
+GitHub Pages 는 `gh-pages` 브랜치에서 서비스됩니다. `main` 에 push 하면
+`.github/workflows/pages.yml` 이 같은 내용을 `gh-pages` 로 복사해 자동 배포합니다.
+
+주소: https://gdrpaul3-byte.github.io/gwangwooklawyer_test/
 
 로컬 미리보기: `python3 -m http.server 8000` 후 http://localhost:8000
