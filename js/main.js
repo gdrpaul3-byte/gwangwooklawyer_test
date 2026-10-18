@@ -53,6 +53,10 @@ const ICONS = {
   blog: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13 7 4 4"/>',
   instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17 7h.01"/>',
 };
+// 사진 슬롯: 파일이 있으면 사진을, 없으면 아이콘을 보여줍니다. (assets/img/photos/)
+const photo = (name, cls = '') =>
+  `<img class="photo ${cls}" src="assets/img/photos/${name}.jpg" alt="" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')" onerror="this.remove()">`;
+
 const icon = (name) =>
   `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ''}</svg>`;
 
@@ -259,7 +263,7 @@ function renderStatic() {
 
   $('[data-career-cards]').innerHTML = ROLES.map((r, i) => `
     <li class="career-card">
-      <div class="career-visual v${i + 1}"><span class="badge-num">${pad(i + 1)}</span><span class="career-axis">${r.axis}</span><span class="career-icon">${icon(r.icon)}</span></div>
+      <div class="career-visual v${i + 1}">${photo(`career-${i + 1}`)}<span class="badge-num">${pad(i + 1)}</span><span class="career-axis">${r.axis}</span><span class="career-icon">${icon(r.icon)}</span></div>
       <div class="career-body">
         <h3>${r.org}</h3>
         <p class="muted">${r.unit}</p>
@@ -306,7 +310,7 @@ function renderStatic() {
 
   $('[data-practice-preview]').innerHTML = PRACTICE.map((p) => `
     <a class="pp-card ${p.tone}" href="#practice/${p.id}">
-      <span class="pp-visual">${icon(p.icon)}<em class="pp-group g-${p.group}">${p.group === 'core' ? '핵심' : p.group === 'special' ? '특화' : '전반'}</em></span>
+      <span class="pp-visual">${photo(`practice-${p.id}`)}${icon(p.icon)}<em class="pp-group g-${p.group}">${p.group === 'core' ? '핵심' : p.group === 'special' ? '특화' : '전반'}</em></span>
       <span class="pp-body"><strong>${p.title}</strong><small>${p.short}</small><span class="arrow" aria-hidden="true">→</span></span>
     </a>`).join('');
 
@@ -344,6 +348,7 @@ function renderPractice(id) {
   const prev = PRACTICE[(idx - 1 + PRACTICE.length) % PRACTICE.length];
   const next = PRACTICE[(idx + 1) % PRACTICE.length];
   $('[data-practice-detail]').innerHTML = `
+    <div class="pd-banner">${photo(`practice-${p.id}`)}</div>
     <header class="pd-head ${p.tone}">
       <span class="pd-icon">${icon(p.icon)}</span>
       <div><p class="kicker">${GROUPS[p.group]}</p><h2 class="h2">${p.title}</h2><p class="muted">${p.short}</p></div>
