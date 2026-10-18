@@ -10,6 +10,7 @@ const CONFIG = {
   email: 'contact@example.com',     // TODO: 실제 이메일 (상담 신청서가 이 주소로 작성됩니다)
   hours: '평일 09:00 – 19:00 (야간·주말 예약 상담 가능)',
   address: '서울특별시 (상세 주소 업데이트 예정)', // TODO: 실제 주소
+  poweredBy: 'https://otterax-homepage.vercel.app/',
   channels: {                        // TODO: 개설되면 URL 입력 (빈 값이면 '준비 중'으로 표시)
     youtube: '',
     blog: '',
@@ -253,6 +254,7 @@ function renderStatic() {
   $$('[data-config]').forEach((el) => { el.textContent = CONFIG[el.dataset.config] || ''; });
   $$('[data-config-href="tel"]').forEach((el) => { el.href = 'tel:' + CONFIG.phone.replace(/[^0-9+]/g, ''); });
   $$('[data-config-href="mailto"]').forEach((el) => { el.href = 'mailto:' + CONFIG.email; });
+  $$('[data-config-href="powered"]').forEach((el) => { el.href = CONFIG.poweredBy; });
   $$('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
 
   $('[data-career-cards]').innerHTML = ROLES.map((r, i) => `
@@ -352,7 +354,10 @@ function renderPractice(id) {
       <section><h3 class="h4">검토하고 대응하는 것</h3><ol class="num-list">${p.approach.map((i) => `<li>${i}</li>`).join('')}</ol></section>
     </div>
     <div class="pd-foot">
-      <a class="btn btn-navy" href="#contact">${p.title} 사건 상담하기 <span class="arrow" aria-hidden="true">→</span></a>
+      <div class="btn-row">
+        <a class="btn btn-navy" href="#contact">${p.title} 사건 상담하기 <span class="arrow" aria-hidden="true">→</span></a>
+        <button type="button" class="btn btn-outline" data-chat-open data-chat-context="${p.title}" data-chat-prefill="${p.title} 사건은 보통 어떤 절차로 진행되나요?">AI에게 먼저 물어보기</button>
+      </div>
       <nav class="pd-nav" aria-label="다른 업무분야">
         <a href="#practice/${prev.id}">← ${prev.title}</a>
         <a href="#practice/${next.id}">${next.title} →</a>

@@ -122,6 +122,24 @@
         </div>
       </div>
 
+      <!-- free AI legal guide -->
+      <div class="section ai-band">
+        <div class="container ai-inner">
+          <div class="ai-copy">
+            <p class="kicker">FREE · AI LEGAL GUIDE</p>
+            <h2 class="h2">상담 전에, 궁금한 것부터<br>먼저 물어보세요.</h2>
+            <p class="muted">형사절차와 수사 단계별 대응, 피해자 보호제도 등 일반적인 법률 정보를 AI가 무료로 안내합니다. 내 사건에 대한 구체적인 판단은 변호사가 직접 상담합니다.</p>
+            <button type="button" class="btn btn-navy" data-chat-open>무료 AI 법률 상담 시작 <span class="arrow" aria-hidden="true">→</span></button>
+          </div>
+          <ul class="ai-prompts">
+            <li><button type="button" data-chat-open data-chat-prefill="경찰에서 출석 요구를 받았어요. 무엇을 준비해야 하나요?">경찰에서 출석 요구를 받았어요. 무엇을 준비해야 하나요?</button></li>
+            <li><button type="button" data-chat-open data-chat-prefill="피해자 조사에는 누구와 함께 갈 수 있나요?">피해자 조사에는 누구와 함께 갈 수 있나요?</button></li>
+            <li><button type="button" data-chat-open data-chat-prefill="송치와 불송치는 어떻게 다른가요?">송치와 불송치는 어떻게 다른가요?</button></li>
+            <li><button type="button" data-chat-open data-chat-prefill="스토킹 잠정조치는 어떤 절차로 진행되나요?">스토킹 잠정조치는 어떤 절차로 진행되나요?</button></li>
+          </ul>
+        </div>
+      </div>
+
       <!-- why women & youth -->
       <div class="section section-dark psych">
         <div class="container psych-inner">
@@ -345,6 +363,11 @@
       <div class="section">
         <div class="container contact-grid">
           <div class="contact-info">
+            <button type="button" class="ai-card" data-chat-open>
+              <span class="ai-card-label">FREE</span>
+              <strong>무료 AI 법률 상담</strong>
+              <span>절차나 제도가 궁금하다면 AI에게 먼저 물어보세요. 일반적인 법률 정보를 안내합니다. →</span>
+            </button>
             <h2 class="h3">연락처</h2>
             <ul class="info-list">
               <li>
@@ -450,16 +473,18 @@
           <span>E. <span data-config="email"></span></span>
         </p>
       </div>
-      <p class="footer-legal">본 홈페이지의 내용은 일반적인 정보 제공을 목적으로 하며, 개별 사건에 대한 법률적 조언이 아닙니다.<br>© <span data-year></span> 변호사 김광욱. All rights reserved.</p>
+      <p class="footer-legal">본 홈페이지의 내용은 일반적인 정보 제공을 목적으로 하며, 개별 사건에 대한 법률적 조언이 아닙니다.<br>© <span data-year></span> 변호사 김광욱. All rights reserved.<br><a class="powered" data-config-href="powered" href="https://otterax-homepage.vercel.app/" target="_blank" rel="noopener" aria-label="Powered by OtterAX"><span>Powered by</span><img src="assets/img/otterax/otterax-wordmark-136.png" srcset="assets/img/otterax/otterax-wordmark-136.png 1x, assets/img/otterax/otterax-wordmark-272.png 2x" alt="OtterAX" width="80" height="19" /></a></p>
     </div>
   </footer>
 
   <!-- ============ MOBILE BOTTOM BAR ============ -->
   <nav class="mobile-bar" aria-label="빠른 상담">
     <a data-config-href="tel" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>전화 상담</a>
+    <a href="#" data-chat-open class="ai"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M18 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>AI 상담</a>
     <a href="#contact" class="primary"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>상담 신청</a>
   </nav>
 
   <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
 </body>
 </html>
