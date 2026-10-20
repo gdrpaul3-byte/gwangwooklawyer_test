@@ -12,6 +12,9 @@
 - 전화번호 · 이메일 · 주소 · 상담시간: `js/main.js` 상단 `CONFIG`
 - 업무분야 / 수사 단계 / 사건사례 / FAQ: `js/main.js` 의 `PRACTICE`, `STEPS`, `CASES`, `FAQ`
 - 상담 신청서는 서버가 없으므로 `CONFIG.email` 주소로 메일 앱을 열어 전송합니다.
+- 카카오톡 등 링크 공유 썸네일: `assets/img/og-image.jpg` (1200×630) 와 `index.html` 의 `og:*` 태그.
+  주소(도메인)가 바뀌면 `og:url` · `og:image` 도 새 주소로 바꿔야 합니다. 카카오톡은 미리보기를 캐시하므로
+  바꾼 뒤에는 카카오 공유 디버거(developers.kakao.com/tool/debugger/sharing)에서 캐시를 초기화합니다.
 
 ## 배포
 GitHub Pages 는 `gh-pages` 브랜치에서 서비스됩니다. `main` 에 push 하면
