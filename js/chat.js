@@ -74,9 +74,39 @@ const CHAT_SUGGESTIONS = [
     if (!frame || e.source !== frame.contentWindow || e.origin !== frameOrigin) return;
     if (e.data && e.data.type === 'lawbot:ready') {
       frameReady = true;
+      hideFrameLoading();
       queued.splice(0).forEach((m) => frame.contentWindow.postMessage(m, frameOrigin));
     } else if (e.data && e.data.type === 'lawbot:close') close();
+    else if (e.data && e.data.type === 'lawbot:handoff') handoff(e.data.href);
+    else if (e.data && e.data.type === 'lawbot:handoff-go') handoffGo();
   });
+
+  function hideFrameLoading() {
+    $('.chat-frame-loading', body)?.remove();
+  }
+
+  // lawbot:handoff: the panel's booking link (상담 문의하기) is on this site, so go there in
+  // this tab instead of opening the site again. Only a #anchor or an absolute http(s)
+  // address on this origin is acked (the ack stops the panel's new tab). The page moves
+  // only on the panel's lawbot:handoff-go, which comes only if no tab was opened, so the
+  // visitor never ends up with both.
+  let handoffHref = null;
+  function handoff(href) {
+    handoffHref = null;
+    if (typeof href !== 'string') return;
+    let url;
+    try { url = href.startsWith('#') ? new URL(href, location.href) : new URL(href); } catch { return; }
+    if (!/^https?:$/.test(url.protocol) || url.origin !== location.origin) return;
+    handoffHref = url.href;
+    frame.contentWindow.postMessage({ type: 'lawbot:handoff-ack' }, frameOrigin);
+  }
+  function handoffGo() {
+    if (!handoffHref) return;
+    const href = handoffHref;
+    handoffHref = null;
+    close();
+    location.assign(href); // this page with #contact only scrolls; it does not reload
+  }
 
   function addMsg(role, text) {
     body.insertAdjacentHTML('beforeend', `<div class="chat-msg ${role}">${role === 'bot' ? md(text) : esc(text)}</div>`);
@@ -86,8 +116,13 @@ const CHAT_SUGGESTIONS = [
   function greet() {
     if (body.childElementCount) return;
     if (CHATBOT.mode === 'iframe' && CHATBOT.embedUrl) {
-      body.innerHTML = `<iframe class="chat-frame" src="${esc(CHATBOT.embedUrl)}" title="AI 법령 안내" referrerpolicy="origin"></iframe>`;
+      // Until the panel says lawbot:ready (a first open can wait seconds for the server),
+      // show a loading line over the iframe instead of a blank box.
+      body.innerHTML = `<div class="chat-frame-loading" role="status"><span class="chat-frame-dots" aria-hidden="true"><i></i><i></i><i></i></span>AI 법령 안내를 준비하고 있어요</div>`
+        + `<iframe class="chat-frame" src="${esc(CHATBOT.embedUrl)}" title="AI 법령 안내" referrerpolicy="origin"></iframe>`;
       frame = $('.chat-frame', body);
+      // A panel that never says ready (a network error) is shown as it is, a moment after it loads.
+      frame.addEventListener('load', () => setTimeout(hideFrameLoading, 1500), { once: true });
       panel.classList.add('is-iframe');
       form.hidden = true; // the panel inside the iframe has its own input box
       return;

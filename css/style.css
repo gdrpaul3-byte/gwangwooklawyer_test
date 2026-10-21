@@ -787,6 +787,13 @@ body.chat-open { overflow: hidden; }
 @keyframes dot { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
 .chat-panel.is-iframe .chat-body { padding: 0; }
 .chat-frame { flex: 1; width: 100%; border: 0; }
+.chat-panel.is-iframe .chat-body { position: relative; }
+.chat-frame-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--paper); color: var(--ink-2); font-size: 14px; font-weight: 600; }
+.chat-frame-dots { display: inline-flex; gap: 4px; }
+.chat-frame-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-500); animation: dot 1s infinite; }
+.chat-frame-dots i:nth-child(2) { animation-delay: .15s; }
+.chat-frame-dots i:nth-child(3) { animation-delay: .3s; }
+@media (prefers-reduced-motion: reduce) { .chat-frame-dots i { animation: none; } }
 .chat-suggest { display: flex; gap: 8px; overflow-x: auto; padding: 0 20px 10px; scrollbar-width: none; }
 .chat-suggest:empty { display: none; }
 .chat-suggest button {
