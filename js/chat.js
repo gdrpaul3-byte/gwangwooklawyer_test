@@ -102,10 +102,14 @@ const CHAT_SUGGESTIONS = [
   }
   function handoffGo() {
     if (!handoffHref) return;
-    const href = handoffHref;
+    const url = new URL(handoffHref);
     handoffHref = null;
     close();
-    location.assign(href); // this page with #contact only scrolls; it does not reload
+    // Same page: change only the hash, so the query (e.g. ?utm_source=) stays and nothing
+    // reloads; main.js switches the tab on hashchange. Another page on this origin: go there.
+    const page = (p) => p.replace(/index\.html$/, '');
+    if (url.origin === location.origin && page(url.pathname) === page(location.pathname)) location.hash = url.hash;
+    else location.assign(url.href);
   }
 
   function addMsg(role, text) {
